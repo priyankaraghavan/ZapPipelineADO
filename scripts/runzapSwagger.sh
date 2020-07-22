@@ -46,25 +46,6 @@ echo "formhandler.fields.field\\(3\\).fieldId=email" >> auth.prop
 echo "formhandler.fields.field\\(3\\).value=${EMAIL}" >> auth.prop
 echo "formhandler.fields.field\\(3\\).enabled=true" >> auth.prop
 
-#sudo docker run -v ${ROOTPATH}:/zap/wrk/:rw -t ${IMAGE} zap-api-scan.py \
-#   -t ${JSON} -f openapi -r ${REPORTNAME} -z "-config formhandler.fields.field\\(0\\).fieldId=userId \
-#                 -config formhandler.fields.field\\(0\\).value=${USERID} \
-#                 -config formhandler.fields.field\\(0\\).enabled=true \ 
-#                 -config formhandler.fields.field\\(1\\).fieldId=includeCountryCode \ 
-#                 -config formhandler.fields.field\\(1\\).value=true \  
-#                 -config formhandler.fields.field\\(1\\).enabled=true \ 
-#                 -config formhandler.fields.field\\(2\\).fieldId=includeFunctionCode \ 
-#                -config formhandler.fields.field\\(2\\).value=true \  
-#                 -config formhandler.fields.field\\(2\\).enabled=true \
-#                 -config formhandler.fields.field\\(3\\).fieldId=email \ 
-#                 -config formhandler.fields.field\\(3\\).value=${EMAIL} \
-#                 -config formhandler.fields.field\\(3\\).enabled=true \
-#                 -config replacer.full_list\(0\).description=auth1 \
-#                 -config replacer.full_list\(0\).enabled=true \
-#                 -config replacer.full_list\(0\).matchtype=REQ_HEADER \
-#                 -config replacer.full_list\(0\).matchstr=Authorization \
-#                 -config replacer.full_list\(0\).regex=false \
-#                 -config replacer.full_list\(0\).replacement=Bearer ${authtoken}"
 docker pull ${IMAGE}
 sudo docker run -v ${ROOTPATH}:/zap/wrk/:rw -t ${IMAGE} zap-api-scan.py \
     -t ${JSON} -f openapi -r ${REPORTNAME} -z "-configfile /zap/wrk/auth.prop" -d
