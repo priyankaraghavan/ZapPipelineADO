@@ -1,0 +1,31 @@
+jobs:
+- job: DevSecOps
+  pool:
+    vmImage: ubuntu-latest
+  displayName: Run ZAP scan
+  steps:
+  #- task: Bash@3
+  #  displayName: Execute Zap with URL
+  #  inputs:
+  #    targetType: filePath
+  #    filePath: './scripts/runzap.sh'
+  #    arguments: '$PWD $URL $REPORTNAME'
+  #    workingDirectory: reports
+  #    failOnStderr: false
+  - task: Bash@3
+    displayName: Execute Zap API
+    inputs:
+      targetType: filePath
+      filePath: './scripts/runzapSwagger.sh'
+      arguments: '$PWD ${JSON} ${AUTHURL} ${REPORTNAME} ${MyMappedClientID} ${MyMappedClientSecret} ${SCOPE} ${USERID} ${MyMappedEmail}'
+      workingDirectory: ./
+      failOnStderr: false
+    env:
+      MyMappedClientID: $(CLIENTID)
+      MyMappedClientSecret: $(CLIENTSECRET)
+      MyMappedEmail: $(EMAIL)
+  - task: PublishPipelineArtifact@1
+    displayName: Publish OWASP ZAP Report
+    inputs:
+      targetPath: reports/
+      artifact: $(REPORTNAME)
