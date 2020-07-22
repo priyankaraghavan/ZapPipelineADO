@@ -19,7 +19,7 @@ echo "$ROOTPATH"
 
 chmod 777 *.*
 chmod 777 -R $ROOTPATH
-python3 ${ROOTPATH}/scripts/Authtoken.py ${AUTHURL} ${CLIENTID} ${CLIENTSECRET} ${SCOPE}
+
 authtoken=$(python3 ${ROOTPATH}/scripts/Authtoken.py ${AUTHURL} ${CLIENTID} ${CLIENTSECRET} ${SCOPE})
 
 #ls -l
